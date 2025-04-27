@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather ForeCasts</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="search-box">
+            <div class="search-input-container">
+                <input type="text" placeholder="Enter your location" class="search-input">
+                <div class="city-dropdown" id="city-dropdown"></div>
+            </div>
+        </div>
+
+        <div class="weather-container">
+            <div class="current-weather">
+                <h2 class="city">Loading...</h2>
+                <div class="weather-icon">
+                    <i id="current-weather-icon" class="fas fa-question fa-4x"></i>
+                </div>
+                <div class="temperature">
+                    <span class="temp">--</span>°C
+                </div>
+                <div class="weather-description">Loading...</div>
+                <div class="weather-details">
+                    <div class="detail">
+                        <i class="fas fa-wind"></i>
+                        <span class="wind">-- km/h</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fas fa-tint"></i>
+                        <span class="humidity">--%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="forecast-container">
+                <h3>7-Day Forecast</h3>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper" id="forecast-cards">
+                        <!-- Forecast cards will be inserted here by JavaScript -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
