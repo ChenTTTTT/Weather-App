@@ -16,6 +16,19 @@ const swiper = new Swiper('.swiper-container', {
         el: '.swiper-pagination',
         clickable: true
     },
+    // Prevent swiping on the main container
+    touchStartPreventDefault: false,
+    nested: true,
+    resistance: true,
+    resistanceRatio: 0.85,
+    // Enable swipe only on the forecast cards
+    touchEventsTarget: 'container',
+    // Improve touch handling
+    touchRatio: 1,
+    touchAngle: 45,
+    simulateTouch: true,
+    shortSwipes: true,
+    // Responsive breakpoints
     breakpoints: {
         320: {
             slidesPerView: 2,

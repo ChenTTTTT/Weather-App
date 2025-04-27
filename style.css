@@ -23,6 +23,9 @@ body {
     max-width: 400px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     overflow: visible;
+    /* Prevent the main container from being swiped */
+    touch-action: pan-y pinch-zoom;
+    position: relative;
 }
 
 .search-box {
@@ -143,6 +146,9 @@ body {
     width: 100%;
     padding: 20px 0;
     overflow: visible;
+    /* Ensure swiper container is properly contained */
+    position: relative;
+    z-index: 1;
 }
 
 /* Make swiper container visible outside the main container */
