@@ -236,6 +236,11 @@ async function searchCities(query) {
         cityDropdown.classList.remove('active');
         return;
     }
+    
+    // Ensure the dropdown is scrollable on mobile
+    if (cityDropdown.classList.contains('active')) {
+        enableDropdownScrolling();
+    }
 
     try {
         const response = await fetch(
@@ -285,6 +290,9 @@ async function searchCities(query) {
 
         // Show dropdown
         cityDropdown.classList.add('active');
+        
+        // Ensure dropdown is scrollable
+        enableDropdownScrolling();
 
     } catch (error) {
         console.error('Error searching cities:', error);
@@ -352,18 +360,37 @@ getWeatherData('London').then(data => {
 // Variable for touch tracking
 let startY = 0;
 
-// Prevent background swiping
+// Function to enable dropdown scrolling on mobile
+function enableDropdownScrolling() {
+    // Remove any existing event listeners
+    cityDropdown.removeEventListener('touchmove', handleDropdownTouch);
+    
+    // Add touch event listeners specifically for the dropdown
+    cityDropdown.addEventListener('touchmove', handleDropdownTouch, { passive: true });
+}
+
+// Handle touch events in the dropdown
+function handleDropdownTouch(e) {
+    // Prevent the event from being canceled by other handlers
+    e.stopPropagation();
+}
+
+// Prevent background swiping but allow dropdown scrolling
 document.addEventListener('touchmove', function(e) {
-    // Allow swiping only within the swiper container
-    if (!e.target.closest('.swiper-container') && !e.target.closest('.swiper-slide')) {
+    // Allow swiping within the swiper container and dropdown
+    if (!e.target.closest('.swiper-container') && 
+        !e.target.closest('.swiper-slide') && 
+        !e.target.closest('.city-dropdown')) {
         e.preventDefault();
     }
 }, { passive: false });
 
 // Prevent pull-to-refresh on mobile
 document.body.addEventListener('touchstart', function(e) {
-    if (e.target.closest('.swiper-container') || e.target.closest('.swiper-slide')) {
-        return; // Allow normal touch behavior in swiper
+    if (e.target.closest('.swiper-container') || 
+        e.target.closest('.swiper-slide') || 
+        e.target.closest('.city-dropdown')) {
+        return; // Allow normal touch behavior in swiper and dropdown
     }
     
     if (e.touches.length === 1) {
@@ -372,8 +399,10 @@ document.body.addEventListener('touchstart', function(e) {
 }, { passive: true });
 
 document.body.addEventListener('touchmove', function(e) {
-    if (e.target.closest('.swiper-container') || e.target.closest('.swiper-slide')) {
-        return; // Allow normal touch behavior in swiper
+    if (e.target.closest('.swiper-container') || 
+        e.target.closest('.swiper-slide') || 
+        e.target.closest('.city-dropdown')) {
+        return; // Allow normal touch behavior in swiper and dropdown
     }
     
     if (e.touches.length === 1) {
