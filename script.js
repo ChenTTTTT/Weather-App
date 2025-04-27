@@ -348,3 +348,38 @@ getWeatherData('London').then(data => {
         updateForecast(data);
     }
 });
+
+// Variable for touch tracking
+let startY = 0;
+
+// Prevent background swiping
+document.addEventListener('touchmove', function(e) {
+    // Allow swiping only within the swiper container
+    if (!e.target.closest('.swiper-container') && !e.target.closest('.swiper-slide')) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+// Prevent pull-to-refresh on mobile
+document.body.addEventListener('touchstart', function(e) {
+    if (e.target.closest('.swiper-container') || e.target.closest('.swiper-slide')) {
+        return; // Allow normal touch behavior in swiper
+    }
+    
+    if (e.touches.length === 1) {
+        startY = e.touches[0].clientY;
+    }
+}, { passive: true });
+
+document.body.addEventListener('touchmove', function(e) {
+    if (e.target.closest('.swiper-container') || e.target.closest('.swiper-slide')) {
+        return; // Allow normal touch behavior in swiper
+    }
+    
+    if (e.touches.length === 1) {
+        // Prevent pull-to-refresh
+        if (e.touches[0].clientY > startY && window.scrollY <= 0) {
+            e.preventDefault();
+        }
+    }
+}, { passive: false });
